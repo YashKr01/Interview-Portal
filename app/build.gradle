@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
 }
@@ -39,6 +40,7 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def nav_version = "2.4.1"
+    def hilt_version = "2.38.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -51,6 +53,11 @@ dependencies {
     // Nav Component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Dagger Hilt
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:2.40.5"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // Scalable Size Units
     implementation 'com.intuit.sdp:sdp-android:1.0.6'

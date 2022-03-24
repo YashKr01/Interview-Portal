@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/activity_main.xml" value="0.16770833333333332" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_login.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_register.xml" value="0.13760683760683762" />
       </map>
     </option>
   </component>

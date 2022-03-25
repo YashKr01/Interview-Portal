@@ -1,13 +1,14 @@
 package com.example.interviewportal.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.interviewportal.R
 import com.example.interviewportal.adapters.ParticipantsAdapter
@@ -19,9 +20,13 @@ import com.example.interviewportal.viewmodels.InterviewViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -85,27 +90,57 @@ class InterviewFragment : Fragment() {
             selectEndTime()
         }
 
-        viewModel.interviewCreationResult.observe(viewLifecycleOwner) { result->
-            when(result){
-                is  Resource.Loading -> Log.d("STATUS", "onViewCreated: LOADING")
-                is  Resource.Error -> Log.d("STATUS", "onViewCreated: ERROR")
-                is  Resource.Success -> Log.d("STATUS", "onViewCreated: SUCCESS")
+        viewModel.interviewCreationResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    Snackbar.make(
+                        requireContext(),
+                        binding.root,
+                        getString(R.string.creating_interview),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    binding.btnCreateInterview.isEnabled = false
+                }
+                is Resource.Error -> {
+                    Snackbar.make(
+                        requireContext(),
+                        binding.root,
+                        result.message.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    binding.btnCreateInterview.isClickable = true
+                }
+                is Resource.Success -> {
+                    Snackbar.make(
+                        requireContext(),
+                        binding.root,
+                        getString(R.string.interview_created_successfully),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        delay(500)
+                        findNavController().popBackStack()
+                    }
+                }
             }
         }
 
         binding.btnCreateInterview.setOnClickListener {
+            val list = participantAdapter.getList()
             val entity = InterviewEntity(
                 uid = UUID.randomUUID().toString(),
                 date = binding.textViewDate.text.toString(),
-                numberOfParticipants = 8,
+                numberOfParticipants = list.size,
                 endTime = binding.textEndTime.text.toString(),
                 startTime = binding.textStartTime.text.toString(),
-                startTimeInt = startTimeInt!!,
-                endTimeInt = endTimeInt!!,
-                participants = "",
+                startTimeInt = startTimeInt,
+                endTimeInt = endTimeInt,
+                participants = list.toString()
+                    .substring(1, list.toString().length - 1),
             )
             viewModel.createInterview(entity)
         }
+
 
     }
 

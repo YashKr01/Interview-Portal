@@ -5,4 +5,5 @@ data class User(
     val username: String = "",
     val email: String = "",
     val color: Int = 0,
+    var isSelected: Boolean = false
 )

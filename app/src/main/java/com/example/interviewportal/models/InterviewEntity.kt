@@ -6,7 +6,7 @@ data class InterviewEntity(
     val numberOfParticipants: Int = 0,
     val startTime: String = "",
     val endTime: String = "",
-    val startTimeInt: Int = 0,
-    val endTimeInt: Int = 0,
-    val participants: String = ""
+    val startTimeInt: Int? = 0,
+    val endTimeInt: Int? = 0,
+    val participants: String = "",
 )

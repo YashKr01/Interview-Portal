@@ -27,4 +27,6 @@
     <string name="create_interview">CREATE INTERVIEW</string>
     <string name="select_time">Select time</string>
     <string name="pick_date">Pick a date</string>
+    <string name="interview_created_successfully">Interview Created successfully!!</string>
+    <string name="creating_interview">CREATING INTERVIEW</string>
 </resources>

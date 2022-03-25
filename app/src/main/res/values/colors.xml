@@ -7,6 +7,8 @@
     <color name="colorLight">#173145</color>
     <color name="colorYellow">#FAD303</color>
     <color name="colorPink">#F23B5E</color>
-    <color name="colorThemeExtra">#FF5252</color>
+    <color name="colorOrange">#FF5252</color>
+    <color name="colorBlue">#00E5FF</color>
+    <color name="colorPurple">#D500F9</color>
     <color name="colorBackgroundWhite">#F1EEEE</color>
 </resources>

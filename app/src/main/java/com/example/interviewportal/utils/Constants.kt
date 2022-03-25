@@ -7,5 +7,4 @@ object Constants {
     const val USER_ID = "uid"
     const val USER_COLOR = "color"
     const val USER_EMAIL = "email"
-
 }

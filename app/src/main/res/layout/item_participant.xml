@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:layout_margin="@dimen/_4sdp"
+    android:layout_margin="@dimen/_2sdp"
     app:cardBackgroundColor="@color/colorPrimary"
-    app:cardCornerRadius="@dimen/_4sdp">
+    app:cardCornerRadius="@dimen/_8sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,27 +20,28 @@
             android:layout_height="@dimen/_50sdp"
             android:fontFamily="@font/ubuntu_bold"
             android:gravity="center"
+            android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:chipBackgroundColor="@color/colorThemeExtra"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginBottom="@dimen/_4sdp"
+            app:chipBackgroundColor="@color/colorPurple"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             tools:text="YK" />
 
         <TextView
             android:id="@+id/itemTextName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:fontFamily="@font/ubuntu_medium"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@id/itemChipName"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="YASH KUMAR" />
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_regular"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintTop_toBottomOf="@id/itemTextName"
             app:layout_constraintStart_toStartOf="@id/itemTextName"
             tools:text="yashkr2099@gmail.com" />

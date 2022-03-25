@@ -13,6 +13,11 @@ import com.example.interviewportal.adapters.ParticipantsAdapter
 import com.example.interviewportal.databinding.FragmentInterviewBinding
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.InterviewViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,10 +61,58 @@ class InterviewFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     if (!result.data.isNullOrEmpty()) {
                         participantAdapter.submitList(result.data)
-                        Log.d("STATUS", "onViewCreated: ERROR ${result.data}")
                     }
                 }
             }
+        }
+
+        binding.inputDate.setOnClickListener {
+            selectDate()
+        }
+
+        binding.inputStartTime.setOnClickListener {
+            selectTime()
+        }
+
+        binding.inputEndTime.setOnClickListener {
+            selectTime()
+        }
+
+    }
+
+    private fun selectTime() {
+
+        val picker =
+            MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select time")
+                .build()
+
+        picker.show(parentFragmentManager, "tag")
+
+        picker.addOnPositiveButtonClickListener {
+            Log.d("DATE TIME", "selectDate: $it")
+        }
+
+    }
+
+    private fun selectDate() {
+
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Pick a date")
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .setCalendarConstraints(
+                CalendarConstraints.Builder()
+                    .setValidator(DateValidatorPointForward.now()).build()
+            )
+            .build()
+
+        datePicker.show(parentFragmentManager, "tag")
+
+        datePicker.addOnPositiveButtonClickListener {
+            Log.d("DATE", "selectDate: $it")
         }
 
     }

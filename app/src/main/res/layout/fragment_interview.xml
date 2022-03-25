@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLight"
+    tools:context=".fragments.InterviewFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Create Interview"
+        app:titleTextAppearance="@style/Theme.InterviewPortal.ToolbarStyle" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/date"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/txtStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/start_time"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="@id/txtDate"
+        app:layout_constraintTop_toBottomOf="@id/txtDate" />
+
+    <TextView
+        android:id="@+id/txtEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/end_time"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="@id/txtDate"
+        app:layout_constraintTop_toBottomOf="@id/txtStartTime" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/inputDate"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/txtDate"
+        app:layout_constraintStart_toStartOf="@id/inputStartTime"
+        app:layout_constraintTop_toTopOf="@id/txtDate"
+        app:strokeColor="@color/colorTextSecondary"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="@string/dd_mm_yyyy"
+            android:textColor="@color/colorTextSecondary"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="@dimen/_6ssp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/inputStartTime"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/txtStartTime"
+        app:layout_constraintStart_toEndOf="@id/txtStartTime"
+        app:layout_constraintTop_toTopOf="@id/txtStartTime"
+        app:strokeColor="@color/colorTextSecondary"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <TextView
+            android:id="@+id/textStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="@string/_00_00_am"
+            android:textColor="@color/colorTextSecondary"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="@dimen/_6ssp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/inputEndTime"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/txtEndTime"
+        app:layout_constraintStart_toStartOf="@id/inputStartTime"
+        app:layout_constraintTop_toTopOf="@id/txtEndTime"
+        app:strokeColor="@color/colorTextSecondary"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <TextView
+            android:id="@+id/textEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="@string/_00_00_am"
+            android:textColor="@color/colorTextSecondary"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="@dimen/_6ssp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/textParticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:text="@string/participants"
+        android:textAllCaps="true"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintStart_toStartOf="@id/txtDate"
+        app:layout_constraintTop_toBottomOf="@id/inputEndTime" />
+
+    <TextView
+        android:id="@+id/textSelectedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:textColor="@color/colorTextSecondary"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/textParticipants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textParticipants"
+        tools:text="3 SELECTED"
+        tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewParticipants"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/btnCreateInterview"
+        app:layout_constraintEnd_toEndOf="@id/textSelectedCount"
+        app:layout_constraintStart_toStartOf="@id/textParticipants"
+        app:layout_constraintTop_toBottomOf="@id/textParticipants"
+        tools:listitem="@layout/item_participant" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateInterview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/sign_up"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_16ssp"
+        app:backgroundTint="@color/colorYellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

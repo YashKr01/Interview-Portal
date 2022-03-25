@@ -18,4 +18,10 @@
     <string name="send_image">Send Image</string>
     <string name="lorem_ipsum_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry</string>
     <string name="are_you_an_admin">Are you an Admin?</string>
+    <string name="date">DATE :</string>
+    <string name="start_time">START TIME :</string>
+    <string name="end_time">END TIME :</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="_00_00_am">00:00 AM</string>
+    <string name="participants">Participants</string>
 </resources>

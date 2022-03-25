@@ -27,6 +27,9 @@ class AppRepository @Inject constructor(
     private val _createInterviewResult = MutableLiveData<Resource<InterviewEntity>>()
     val createInterviewResult get() = _createInterviewResult
 
+    private val _interviewList = MutableLiveData<Resource<List<InterviewEntity>>>()
+    val interviewList get() = _interviewList
+
     fun registerUser(email: String, password: String, username: String, color: Int) {
         _result.postValue(Resource.Loading())
         auth.createUserWithEmailAndPassword(email, password)
@@ -86,6 +89,24 @@ class AppRepository @Inject constructor(
             .addOnFailureListener {
                 _createInterviewResult.postValue(Resource.Error(it.message.toString(), null))
             }
+    }
+
+    fun getInterviewList() {
+        _interviewList.postValue(Resource.Loading())
+        database.reference.child(INTERVIEWS_KEY).addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val list = mutableListOf<InterviewEntity>()
+                for (snapshot in dataSnapshot.children) {
+                    snapshot.getValue(InterviewEntity::class.java)?.let { list.add(it) }
+                }
+                _interviewList.postValue(Resource.Success(list))
+            }
+
+            override fun onCancelled(error: DatabaseError) =
+                _interviewList.postValue(Resource.Error("ERROR ${error.message}"))
+
+        })
     }
 
 }

@@ -1,10 +1,41 @@
 package com.example.interviewportal.utils
 
+import com.google.android.material.timepicker.MaterialTimePicker
+
 object Constants {
 
     const val USERS_KEY = "users"
-    const val USERNAME_KEY = "name"
-    const val USER_ID = "uid"
-    const val USER_COLOR = "color"
-    const val USER_EMAIL = "email"
+    const val INTERVIEWS_KEY = "interviews"
+
+    fun getFormattedTime(pickedHour: Int, pickedMinute: Int, picker: MaterialTimePicker): String {
+        var result: String
+        when {
+            pickedHour > 12 -> {
+                result = if (pickedMinute < 10) "${picker.hour - 12}:0${picker.minute} PM"
+                else "${picker.hour - 12}:${picker.minute} PM"
+            }
+            pickedHour == 12 -> {
+                result = if (pickedMinute < 10) "${picker.hour}:${picker.minute} PM"
+                else "${picker.hour}:${picker.minute} PM"
+            }
+            pickedHour == 0 -> {
+                result = if (pickedMinute < 10) "${picker.hour + 12}:${picker.minute} AM"
+                else "${picker.hour + 12}:${picker.minute} AM"
+            }
+            else ->
+                result = if (pickedMinute < 10) "${picker.hour}:${picker.minute} AM"
+                else "${picker.hour}:${picker.minute} AM"
+        }
+
+        if (result.length < 8) result = "0${result}"
+
+        return result
+    }
+
+    fun getFormattedTime(time: String): Int {
+        val hour = "${time[0]}${time[1]}"
+        return if(time.contains("PM")) (hour.toInt() % 12) + 12
+        else hour.toInt() % 12
+    }
+
 }

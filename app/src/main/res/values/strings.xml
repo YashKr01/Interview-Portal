@@ -25,4 +25,6 @@
     <string name="_00_00_am">00:00 AM</string>
     <string name="participants">Participants</string>
     <string name="create_interview">CREATE INTERVIEW</string>
+    <string name="select_time">Select time</string>
+    <string name="pick_date">Pick a date</string>
 </resources>

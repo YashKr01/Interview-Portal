@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.interviewportal.R
 import com.example.interviewportal.adapters.ParticipantsAdapter
 import com.example.interviewportal.databinding.FragmentInterviewBinding
+import com.example.interviewportal.models.InterviewEntity
+import com.example.interviewportal.utils.Constants
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.InterviewViewModel
 import com.google.android.material.datepicker.CalendarConstraints
@@ -19,6 +22,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class InterviewFragment : Fragment() {
@@ -27,6 +31,9 @@ class InterviewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<InterviewViewModel>()
+
+    private var startTimeInt: Int? = null
+    private var endTimeInt: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,16 +78,64 @@ class InterviewFragment : Fragment() {
         }
 
         binding.inputStartTime.setOnClickListener {
-            selectTime()
+            selectStartTime()
         }
 
         binding.inputEndTime.setOnClickListener {
-            selectTime()
+            selectEndTime()
+        }
+
+        viewModel.interviewCreationResult.observe(viewLifecycleOwner) { result->
+            when(result){
+                is  Resource.Loading -> Log.d("STATUS", "onViewCreated: LOADING")
+                is  Resource.Error -> Log.d("STATUS", "onViewCreated: ERROR")
+                is  Resource.Success -> Log.d("STATUS", "onViewCreated: SUCCESS")
+            }
+        }
+
+        binding.btnCreateInterview.setOnClickListener {
+            val entity = InterviewEntity(
+                uid = UUID.randomUUID().toString(),
+                date = binding.textViewDate.text.toString(),
+                numberOfParticipants = 8,
+                endTime = binding.textEndTime.text.toString(),
+                startTime = binding.textStartTime.text.toString(),
+                startTimeInt = startTimeInt!!,
+                endTimeInt = endTimeInt!!,
+                participants = "",
+            )
+            viewModel.createInterview(entity)
         }
 
     }
 
-    private fun selectTime() {
+    private fun selectEndTime() {
+
+        val picker =
+            MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText(getString(R.string.select_time))
+                .build()
+
+        picker.show(parentFragmentManager, picker.tag)
+
+        picker.addOnPositiveButtonClickListener {
+
+            val pickedHour: Int = picker.hour
+            val pickedMinute: Int = picker.minute
+
+            val formattedTime = Constants.getFormattedTime(pickedHour, pickedMinute, picker)
+
+            binding.textEndTime.text = formattedTime
+            endTimeInt = Constants.getFormattedTime(formattedTime)
+            Toast.makeText(requireContext(), "$endTimeInt", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun selectStartTime() {
 
         val picker =
             MaterialTimePicker.Builder()
@@ -90,10 +145,18 @@ class InterviewFragment : Fragment() {
                 .setTitleText("Select time")
                 .build()
 
-        picker.show(parentFragmentManager, "tag")
+        picker.show(parentFragmentManager, picker.tag)
 
         picker.addOnPositiveButtonClickListener {
-            Log.d("DATE TIME", "selectDate: $it")
+
+            val pickedHour: Int = picker.hour
+            val pickedMinute: Int = picker.minute
+
+            val formattedTime = Constants.getFormattedTime(pickedHour, pickedMinute, picker)
+
+            binding.textStartTime.text = formattedTime
+            startTimeInt = Constants.getFormattedTime(formattedTime)
+            Toast.makeText(requireContext(), "$startTimeInt", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -101,7 +164,7 @@ class InterviewFragment : Fragment() {
     private fun selectDate() {
 
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Pick a date")
+            .setTitleText(getString(R.string.pick_date))
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
             .setCalendarConstraints(
                 CalendarConstraints.Builder()
@@ -109,10 +172,10 @@ class InterviewFragment : Fragment() {
             )
             .build()
 
-        datePicker.show(parentFragmentManager, "tag")
+        datePicker.show(parentFragmentManager, datePicker.tag)
 
         datePicker.addOnPositiveButtonClickListener {
-            Log.d("DATE", "selectDate: $it")
+            binding.textViewDate.text = datePicker.headerText
         }
 
     }

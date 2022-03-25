@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.interviewportal.R
 import com.example.interviewportal.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -28,6 +30,9 @@ class HomeFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToInterviewFragment())
         }
+
+
+
     }
 
     override fun onDestroyView() {

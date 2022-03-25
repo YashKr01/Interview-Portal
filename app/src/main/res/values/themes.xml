@@ -16,4 +16,10 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="Theme.InterviewPortal.ChipStyle">
+        <item name="fontFamily">@font/ubuntu_regular</item>
+        <item name="android:fontFamily">@font/ubuntu_regular</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+    </style>
+
 </resources>

@@ -11,4 +11,6 @@
     <color name="colorBlue">#00E5FF</color>
     <color name="colorPurple">#D500F9</color>
     <color name="colorBackgroundWhite">#F1EEEE</color>
+    <color name="chip_background">#00BFA5</color>
+    <color name="chip_stroke">#006053</color>
 </resources>

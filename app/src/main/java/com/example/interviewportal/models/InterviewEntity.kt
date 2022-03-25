@@ -1,6 +1,7 @@
 package com.example.interviewportal.models
 
 data class InterviewEntity(
+    val title: String = "",
     val uid: String = "",
     val date: String = "",
     val numberOfParticipants: Int = 0,

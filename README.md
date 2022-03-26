@@ -27,6 +27,7 @@
 - Display Interview List
 - Schedule Interview
 - Edit already Scheduled interview
+- Upload Resume
 - Material Design Components
 - Survives Configuration changes
 
@@ -39,7 +40,7 @@
 ## SCREENSHOTS
 
 
- | List Of Interviews | EDIT Scheduled Interviews | Schedule New Interviews |
- --------------|------------|-------------|
- | ![](Images/img2.jpg) | ![](Images/img1.jpg)  | ![](Images/img3.jpg) |
+ | List Of Interviews | EDIT Scheduled Interviews | Schedule New Interviews | Upload Resume |
+ --------------|------------|-------------| -------------|
+ | ![](Images/img2.jpg) | ![](Images/img1.jpg)  | ![](Images/img3.jpg) | ![](Images/img3.jpg) |
 

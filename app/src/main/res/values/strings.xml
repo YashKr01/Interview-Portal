@@ -31,4 +31,6 @@
     <string name="creating_interview">CREATING INTERVIEW</string>
     <string name="interview_title">Interview Title</string>
     <string name="sample_date">22 April 2022</string>
+    <string name="add_participants">Add Participants</string>
+    <string name="edit_interview">Edit Interview</string>
 </resources>

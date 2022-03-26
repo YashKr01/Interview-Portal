@@ -1,5 +1,9 @@
 package com.example.interviewportal.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class InterviewEntity(
     val title: String = "",
     val uid: String = "",
@@ -10,4 +14,4 @@ data class InterviewEntity(
     val startTimeInt: Int? = 0,
     val endTimeInt: Int? = 0,
     val participants: String = "",
-)
+) : Parcelable

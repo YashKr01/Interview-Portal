@@ -22,10 +22,22 @@
         <action
             android:id="@+id/action_homeFragment_to_interviewFragment"
             app:destination="@id/interviewFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editInterviewFragment"
+            app:destination="@id/editInterviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/interviewFragment"
         android:name="com.example.interviewportal.fragments.InterviewFragment"
         android:label="fragment_interview"
         tools:layout="@layout/fragment_interview" />
+    <fragment
+        android:id="@+id/editInterviewFragment"
+        android:name="com.example.interviewportal.fragments.EditInterviewFragment"
+        android:label="fragment_edit_interview"
+        tools:layout="@layout/fragment_edit_interview" >
+        <argument
+            android:name="Interview"
+            app:argType="com.example.interviewportal.models.InterviewEntity" />
+    </fragment>
 </navigation>

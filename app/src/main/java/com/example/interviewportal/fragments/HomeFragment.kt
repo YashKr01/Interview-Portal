@@ -71,19 +71,6 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_upload, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.uploadMenu) {
-            
-            return true
-        }
-        return false
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

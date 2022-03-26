@@ -27,11 +27,13 @@ object Constants {
     private const val HOUR = 12
     private const val MINUTE = 10
 
+    const val FILE_TYPE = "application/pdf"
+
     fun getFormattedTime(pickedHour: Int, pickedMinute: Int, picker: MaterialTimePicker): String {
         var result: String
         when {
             pickedHour > 12 -> {
-                result = if (pickedMinute < 10) "${picker.hour - 12}:0${picker.minute} PM"
+                result = if (pickedMinute < 10) "${picker.hour - 12}:${picker.minute} PM"
                 else "${picker.hour - 12}:${picker.minute} PM"
             }
             pickedHour == 12 -> {

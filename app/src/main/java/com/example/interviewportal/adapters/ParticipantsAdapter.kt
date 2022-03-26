@@ -14,6 +14,8 @@ import com.example.interviewportal.utils.Constants.COLOR_0
 import com.example.interviewportal.utils.Constants.COLOR_1
 import com.example.interviewportal.utils.Constants.COLOR_2
 import com.example.interviewportal.utils.Constants.COLOR_3
+import com.example.interviewportal.utils.ExtensionFunctions.hide
+import com.example.interviewportal.utils.ExtensionFunctions.show
 
 class ParticipantsAdapter(private val context: Context) :
     ListAdapter<User, ParticipantsAdapter.ParticipantViewHolder>(ParticipantItemComparator()) {
@@ -44,14 +46,16 @@ class ParticipantsAdapter(private val context: Context) :
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorBlue))
                 }
 
-                root.setStrokeColor(
-                    if (item.isSelected)
-                        ColorStateList
-                            .valueOf(ContextCompat.getColor(context, R.color.colorYellow))
-                    else
-                        ColorStateList
-                            .valueOf(ContextCompat.getColor(context, R.color.colorPrimary))
-                )
+                if (item.isSelected){
+                    root.setStrokeColor(ColorStateList
+                        .valueOf(ContextCompat.getColor(context, R.color.colorYellow)))
+                    checkMark.show()
+                }
+                else{
+                    root.setStrokeColor(ColorStateList
+                        .valueOf(ContextCompat.getColor(context, R.color.colorPrimary)))
+                    checkMark.hide()
+                }
 
                 root.setOnClickListener {
                     if (!item.isSelected) {
@@ -60,12 +64,14 @@ class ParticipantsAdapter(private val context: Context) :
                                 .valueOf(ContextCompat.getColor(context, R.color.colorYellow))
                         )
                         item.isSelected = true
+                        checkMark.show()
                     } else {
                         root.setStrokeColor(
                             ColorStateList
                                 .valueOf(ContextCompat.getColor(context, R.color.colorPrimary))
                         )
                         item.isSelected = false
+                        checkMark.hide()
                     }
                 }
 

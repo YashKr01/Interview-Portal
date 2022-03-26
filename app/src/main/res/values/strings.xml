@@ -37,4 +37,6 @@
     <string name="formatted_participant_count">%1$d Participants</string>
     <string name="formatted_chip_name">%1$s%2$s</string>
     <string name="upload_resume">UPLOAD RESUME</string>
+    <string name="upload_your_resume">Upload you resume</string>
+    <string name="note_only_pdfs_are_allowed">Note : Only PDFs are allowed</string>
 </resources>

@@ -39,4 +39,8 @@
     <string name="upload_resume">UPLOAD RESUME</string>
     <string name="upload_your_resume">Upload you resume</string>
     <string name="note_only_pdfs_are_allowed">Note : Only PDFs are allowed</string>
+    <string name="uploading">UPLOADING…</string>
+    <string name="upload_success">UPLOADED SUCCESSFULLY!!</string>
+    <string name="upload_fail">UPLOAD FAILED!!</string>
+    <string name="upload">Upload</string>
 </resources>

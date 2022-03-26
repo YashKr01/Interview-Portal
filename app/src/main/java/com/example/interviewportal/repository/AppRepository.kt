@@ -97,6 +97,7 @@ class AppRepository @Inject constructor(
         else if (checkValidInterview(interview)) {
             database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
                 .addOnSuccessListener {
+
                     if (_validationResult.value == true) {
                         _createInterviewResult.postValue(Resource.Success(interview))
                         for (participantId in interview.participants.split(Regex(", "))) {
@@ -146,7 +147,9 @@ class AppRepository @Inject constructor(
                                 (currentInterview.endTimeInt <= interview.endTimeInt!! &&
                                         currentInterview.endTimeInt > interview.startTimeInt)
 
-                            if (currentInterview.date == interview.date && (startTimeClash || endTimeClash)) {
+                            if (currentInterview.date == interview.date &&
+                                currentInterview.interviewId != interview.uid &&
+                                (startTimeClash || endTimeClash)) {
                                 _validationResult.postValue(false)
                                 break
                             }

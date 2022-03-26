@@ -28,24 +28,25 @@ object Constants {
     private const val MINUTE = 10
 
     const val FILE_TYPE = "application/pdf"
+    const val FILE_LOCATION = "uploads/"
 
     fun getFormattedTime(pickedHour: Int, pickedMinute: Int, picker: MaterialTimePicker): String {
         var result: String
         when {
             pickedHour > 12 -> {
-                result = if (pickedMinute < 10) "${picker.hour - 12}:${picker.minute} PM"
+                result = if (pickedMinute < 10) "${picker.hour - 12}:0${picker.minute} PM"
                 else "${picker.hour - 12}:${picker.minute} PM"
             }
             pickedHour == 12 -> {
-                result = if (pickedMinute < 10) "${picker.hour}:${picker.minute} PM"
+                result = if (pickedMinute < 10) "${picker.hour}:0${picker.minute} PM"
                 else "${picker.hour}:${picker.minute} PM"
             }
             pickedHour == 0 -> {
-                result = if (pickedMinute < 10) "${picker.hour + 12}:${picker.minute} AM"
+                result = if (pickedMinute < 10) "${picker.hour + 12}:0${picker.minute} AM"
                 else "${picker.hour + 12}:${picker.minute} AM"
             }
             else ->
-                result = if (pickedMinute < 10) "${picker.hour}:${picker.minute} AM"
+                result = if (pickedMinute < 10) "${picker.hour}:0${picker.minute} AM"
                 else "${picker.hour}:${picker.minute} AM"
         }
 

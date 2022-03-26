@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.interviewportal.models.InterviewEntity
 import com.example.interviewportal.models.User
 import com.example.interviewportal.utils.Constants.INTERVIEWS_KEY
+import com.example.interviewportal.utils.Constants.PARTICIPANT_INTERVIEW_KEY
 import com.example.interviewportal.utils.Constants.USERS_KEY
 import com.example.interviewportal.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -82,13 +83,24 @@ class AppRepository @Inject constructor(
 
     fun createInterview(interview: InterviewEntity) {
         _createInterviewResult.postValue(Resource.Loading())
-        database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
-            .addOnSuccessListener {
-                _createInterviewResult.postValue(Resource.Success(interview))
-            }
-            .addOnFailureListener {
-                _createInterviewResult.postValue(Resource.Error(it.message.toString(), null))
-            }
+
+        if (interview.title.isEmpty() || interview.date.isEmpty() ||
+            interview.startTimeInt == null || interview.endTimeInt == null
+        )
+            _createInterviewResult.postValue(Resource.Error(message = "Please validate all details"))
+        else if (interview.numberOfParticipants < 2)
+            _createInterviewResult.postValue(Resource.Error(message = "Number of participants must me more than 1"))
+        else {
+            database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
+                .addOnSuccessListener {
+                    _createInterviewResult.postValue(Resource.Success(interview))
+//                    database.getReference(PARTICIPANT_INTERVIEW_KEY).child()
+                }
+                .addOnFailureListener {
+                    _createInterviewResult.postValue(Resource.Error(it.message.toString(), null))
+                }
+        }
+
     }
 
     fun getInterviewList() {

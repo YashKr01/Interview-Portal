@@ -6,6 +6,7 @@ object Constants {
 
     const val USERS_KEY = "users"
     const val INTERVIEWS_KEY = "interviews"
+    const val PARTICIPANT_INTERVIEW_KEY = "participant-interviews"
 
     fun getFormattedTime(pickedHour: Int, pickedMinute: Int, picker: MaterialTimePicker): String {
         var result: String

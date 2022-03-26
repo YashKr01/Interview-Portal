@@ -36,7 +36,23 @@ class ParticipantsAdapter(private val context: Context) :
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorBlue))
                 }
 
-                binding.root.setOnClickListener {
+                root.setStrokeColor(
+                    if (item.isSelected)
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.colorYellow
+                            )
+                        ) else
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.colorPrimary
+                            )
+                        )
+                )
+
+                root.setOnClickListener {
                     if (!item.isSelected) {
                         binding.root
                             .setStrokeColor(
@@ -80,8 +96,8 @@ class ParticipantsAdapter(private val context: Context) :
     fun getList(): List<String> {
 
         val list = mutableListOf<String>()
-        for(item in this.currentList) {
-            if(item.isSelected) list.add(item.uid)
+        for (item in this.currentList) {
+            if (item.isSelected) list.add(item.uid)
         }
 
         return list

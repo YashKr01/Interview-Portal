@@ -1,6 +1,7 @@
 package com.example.interviewportal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.interviewportal.R
+import com.example.interviewportal.adapters.ParticipantsAdapter
 import com.example.interviewportal.databinding.FragmentEditInterviewBinding
 import com.example.interviewportal.models.InterviewEntity
+import com.example.interviewportal.models.User
 import com.example.interviewportal.utils.Constants
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.EditInterviewViewModel
@@ -60,6 +64,13 @@ class EditInterviewFragment : Fragment() {
             textViewDate.text = interview.date
         }
 
+        val participantAdapter = ParticipantsAdapter(requireContext())
+        binding.recyclerViewParticipants.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = participantAdapter
+        }
+
         viewModel.interviewCreationResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -95,16 +106,45 @@ class EditInterviewFragment : Fragment() {
             }
         }
 
+        viewModel.participantList.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        "ERROR : ${result.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (!result.data.isNullOrEmpty()) {
+                        val listSet = HashSet<String>(interview.participants.split(Regex(", ")))
+                        val list = mutableListOf<User>()
+                        for (item in result.data) {
+                            if (listSet.contains(item.uid)) list.add(item.copy(isSelected = true))
+                            else list.add(item)
+                        }
+                        participantAdapter.submitList(list)
+                        listSet.clear()
+                    }
+                }
+            }
+        }
+
         binding.btnEditInterview.setOnClickListener {
+            val list = participantAdapter.getList()
             val entity = InterviewEntity(
                 uid = interview.uid,
                 date = binding.textViewDate.text.toString(),
-                numberOfParticipants = 0,
+                numberOfParticipants = list.size,
                 endTime = binding.textEndTime.text.toString(),
                 startTime = binding.textStartTime.text.toString(),
                 startTimeInt = startTimeInt,
                 endTimeInt = endTimeInt,
-                participants = "",
+                participants = list.toString()
+                    .substring(1, list.toString().length - 1),
                 title = binding.textInterviewTitle.text.toString()
             )
             viewModel.createInterview(entity)

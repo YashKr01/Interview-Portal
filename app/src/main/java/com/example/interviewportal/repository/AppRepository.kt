@@ -2,6 +2,7 @@ package com.example.interviewportal.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.interviewportal.models.InterviewEntity
+import com.example.interviewportal.models.ParticipantInterview
 import com.example.interviewportal.models.User
 import com.example.interviewportal.utils.Constants.INTERVIEWS_KEY
 import com.example.interviewportal.utils.Constants.PARTICIPANT_INTERVIEW_KEY
@@ -94,7 +95,17 @@ class AppRepository @Inject constructor(
             database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
                 .addOnSuccessListener {
                     _createInterviewResult.postValue(Resource.Success(interview))
-//                    database.getReference(PARTICIPANT_INTERVIEW_KEY).child()
+                    for (participantId in interview.participants.split(Regex(", "))) {
+                        database.reference.child(PARTICIPANT_INTERVIEW_KEY).child(participantId)
+                            .push().setValue(
+                                ParticipantInterview(
+                                    interviewId = interview.uid,
+                                    date = interview.date,
+                                    startTimeInt = interview.startTimeInt,
+                                    endTimeInt = interview.endTimeInt
+                                )
+                            )
+                    }
                 }
                 .addOnFailureListener {
                     _createInterviewResult.postValue(Resource.Error(it.message.toString(), null))

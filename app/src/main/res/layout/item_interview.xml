@@ -9,6 +9,8 @@
     android:layout_marginEnd="@dimen/_4sdp"
     android:clickable="true"
     android:focusable="true"
+    app:strokeColor="@color/colorLight"
+    app:strokeWidth="1dp"
     app:cardBackgroundColor="@color/colorPrimary"
     app:cardCornerRadius="@dimen/_8sdp">
 

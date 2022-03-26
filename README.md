@@ -22,6 +22,7 @@
 - DiffUtil
 - Coroutines
 - ViewBinding
+- Dagger Hilt
 
 
 ## SETUP - 

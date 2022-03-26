@@ -17,7 +17,7 @@ class InterviewAdapter :
                 itemInterviewDate.text = item.date
                 itemInterviewTitle.text = item.title
                 itemTime.text = "From : ${item.startTime} to ${item.endTime}"
-                chipParticipantsCount.text = item.numberOfParticipants.toString()
+                chipParticipantsCount.text = "${item.numberOfParticipants} participants"
             }
     }
 

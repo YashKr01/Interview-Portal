@@ -1,13 +1,14 @@
 package com.example.interviewportal.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.interviewportal.adapters.InterviewAdapter
 import com.example.interviewportal.databinding.FragmentHomeBinding
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.HomeViewModel
@@ -36,11 +37,23 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToInterviewFragment())
         }
 
+        val interviewAdapter = InterviewAdapter()
+        binding.recyclerViewInterviews.apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = interviewAdapter
+        }
+
         viewModel.interviewList.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Resource.Loading -> Log.d("sjhbachjcbdk", "onViewCreated: LOADING")
-                is Resource.Error -> Log.d("sjhbachjcbdk", "onViewCreated: ERROR")
-                is Resource.Success -> Log.d("sjhbachjcbdk", "onViewCreated: SUCCESS ${result.data}")
+                is Resource.Loading -> binding.progressBar3.visibility = View.VISIBLE
+                is Resource.Error -> {
+                    binding.progressBar3.visibility = View.GONE
+                }
+                is Resource.Success -> {
+                    binding.progressBar3.visibility = View.GONE
+                    if (!result.data.isNullOrEmpty()) interviewAdapter.submitList(result.data)
+                }
             }
         }
 

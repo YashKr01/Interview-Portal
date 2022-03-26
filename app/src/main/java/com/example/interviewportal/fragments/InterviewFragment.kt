@@ -137,7 +137,7 @@ class InterviewFragment : Fragment() {
                 endTimeInt = endTimeInt,
                 participants = list.toString()
                     .substring(1, list.toString().length - 1),
-                title = ""
+                title = binding.textInterviewTitle.text.toString()
             )
             viewModel.createInterview(entity)
         }

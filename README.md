@@ -1,4 +1,4 @@
-# Interview-Portal - An android application for scheduling Interviews with multiple participants
+# Interview-Portal - An android application for scheduling Interviews with multiple participants following MVVM Architecture
 
 ## :computer: CODE BASE
 

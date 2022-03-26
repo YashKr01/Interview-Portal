@@ -43,4 +43,6 @@
  | List Of Interviews | EDIT Scheduled Interviews | Schedule New Interviews | Upload Resume |
  --------------|------------|-------------| -------------|
  | ![](Images/img2.jpg) | ![](Images/img1.jpg)  | ![](Images/img3.jpg) | ![](Images/img3.jpg) |
+ 
+ https://github.com/YashKr01/Interview-Portal/releases/download/v2.0.0/app-debug.apk
 

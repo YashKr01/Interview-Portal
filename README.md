@@ -37,4 +37,10 @@
 
 - Clone this URL in Android Studio - https://github.com/YashKr01/Interview-Portal.git
 
+## SCREENSHOTS
+
+
+ | List Of Interviews | EDIT Scheduled Interviews | Schedule New Interviews |
+ --------------|------------|-------------|
+ | ![](Images/img2.jpg) | ![](Images/img1.jpg)  | ![](Images/img3.jpg) |
 

@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.interviewportal.R
 import com.example.interviewportal.databinding.ItemParticipantBinding
 import com.example.interviewportal.models.User
+import com.example.interviewportal.utils.Constants.COLOR_0
+import com.example.interviewportal.utils.Constants.COLOR_1
+import com.example.interviewportal.utils.Constants.COLOR_2
+import com.example.interviewportal.utils.Constants.COLOR_3
 
 class ParticipantsAdapter(private val context: Context) :
     ListAdapter<User, ParticipantsAdapter.ParticipantViewHolder>(ParticipantItemComparator()) {
@@ -23,16 +27,20 @@ class ParticipantsAdapter(private val context: Context) :
                 itemTextEmail.text = item.email
 
                 val str = item.username.split(Regex(" "), 2)
-                itemChipName.text = str.first()[0].toString() + str.last()[0].toString()
+                itemChipName.text = context.getString(
+                    R.string.formatted_chip_name,
+                    str.first()[0].toString(),
+                    str.last()[0].toString()
+                )
 
                 when (item.color) {
-                    0 -> itemChipName.chipBackgroundColor =
+                    COLOR_0 -> itemChipName.chipBackgroundColor =
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPink))
-                    1 -> itemChipName.chipBackgroundColor =
+                    COLOR_1 -> itemChipName.chipBackgroundColor =
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorOrange))
-                    2 -> itemChipName.chipBackgroundColor =
+                    COLOR_2 -> itemChipName.chipBackgroundColor =
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPurple))
-                    3 -> itemChipName.chipBackgroundColor =
+                    COLOR_3 -> itemChipName.chipBackgroundColor =
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorBlue))
                 }
 

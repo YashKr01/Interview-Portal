@@ -8,6 +8,11 @@ object Constants {
     const val INTERVIEWS_KEY = "interviews"
     const val PARTICIPANT_INTERVIEW_KEY = "participant-interviews"
 
+    const val COLOR_0 = 0
+    const val COLOR_1 = 1
+    const val COLOR_2 = 2
+    const val COLOR_3 = 3
+
     fun getFormattedTime(pickedHour: Int, pickedMinute: Int, picker: MaterialTimePicker): String {
         var result: String
         when {

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.interviewportal.R
 import com.example.interviewportal.databinding.FragmentRegisterBinding
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.RegisterViewModel

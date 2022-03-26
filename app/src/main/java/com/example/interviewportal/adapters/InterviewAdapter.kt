@@ -1,13 +1,18 @@
 package com.example.interviewportal.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.interviewportal.R
 import com.example.interviewportal.databinding.ItemInterviewBinding
 import com.example.interviewportal.models.InterviewEntity
 
-class InterviewAdapter(private val onClick: (InterviewEntity) -> Unit) :
+class InterviewAdapter(
+    private val onClick: (InterviewEntity) -> Unit,
+    private val context: Context
+) :
     ListAdapter<InterviewEntity, InterviewAdapter.InterviewViewHolder>(InterviewItemComparator()) {
 
     inner class InterviewViewHolder(private val binding: ItemInterviewBinding) :
@@ -16,8 +21,13 @@ class InterviewAdapter(private val onClick: (InterviewEntity) -> Unit) :
             binding.apply {
                 itemInterviewDate.text = item.date
                 itemInterviewTitle.text = item.title
-                itemTime.text = "From : ${item.startTime} to ${item.endTime}"
-                chipParticipantsCount.text = "${item.numberOfParticipants} participants"
+                itemTime.text = context.getString(
+                    R.string.formatted_time,
+                    item.startTime,
+                    item.endTime
+                )
+                chipParticipantsCount.text =
+                    context.getString(R.string.formatted_participant_count, item.startTimeInt)
                 root.setOnClickListener {
                     onClick(item)
                 }

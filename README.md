@@ -24,6 +24,12 @@
 - ViewBinding
 - Dagger Hilt
 
+## APP FEATURES
+- Display Interview List
+- Schedule Interview
+- Edit already Scheduled interview
+- Material Design Components
+- Survives Configuration changes
 
 ## SETUP - 
 - Download directly on Android device - <br/> <br/>

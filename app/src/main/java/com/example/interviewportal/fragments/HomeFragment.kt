@@ -37,7 +37,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToInterviewFragment())
         }
 
-        val interviewAdapter = InterviewAdapter()
+        val interviewAdapter = InterviewAdapter(onClick = { interview ->
+            findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToEditInterviewFragment(interview))
+        })
         binding.recyclerViewInterviews.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())

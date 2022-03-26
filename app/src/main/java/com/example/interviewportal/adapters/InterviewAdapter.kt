@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.interviewportal.databinding.ItemInterviewBinding
 import com.example.interviewportal.models.InterviewEntity
 
-class InterviewAdapter :
+class InterviewAdapter(private val onClick: (InterviewEntity) -> Unit) :
     ListAdapter<InterviewEntity, InterviewAdapter.InterviewViewHolder>(InterviewItemComparator()) {
 
-    class InterviewViewHolder(private val binding: ItemInterviewBinding) :
+    inner class InterviewViewHolder(private val binding: ItemInterviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: InterviewEntity) =
             binding.apply {
@@ -18,6 +18,9 @@ class InterviewAdapter :
                 itemInterviewTitle.text = item.title
                 itemTime.text = "From : ${item.startTime} to ${item.endTime}"
                 chipParticipantsCount.text = "${item.numberOfParticipants} participants"
+                root.setOnClickListener {
+                    onClick(item)
+                }
             }
     }
 

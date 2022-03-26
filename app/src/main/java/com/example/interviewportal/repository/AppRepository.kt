@@ -80,11 +80,11 @@ class AppRepository @Inject constructor(
         })
     }
 
-    fun createInterview(interviewEntity: InterviewEntity) {
+    fun createInterview(interview: InterviewEntity) {
         _createInterviewResult.postValue(Resource.Loading())
-        database.reference.child(INTERVIEWS_KEY).push().setValue(interviewEntity)
+        database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
             .addOnSuccessListener {
-                _createInterviewResult.postValue(Resource.Success(interviewEntity))
+                _createInterviewResult.postValue(Resource.Success(interview))
             }
             .addOnFailureListener {
                 _createInterviewResult.postValue(Resource.Error(it.message.toString(), null))

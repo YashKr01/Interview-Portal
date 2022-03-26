@@ -205,14 +205,14 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginBottom="@dimen/_4sdp"
         android:clipToPadding="false"
-        app:layout_constraintBottom_toTopOf="@id/btnCreateInterview"
+        app:layout_constraintBottom_toTopOf="@id/btnEditInterview"
         app:layout_constraintEnd_toEndOf="@id/textSelectedCount"
         app:layout_constraintStart_toStartOf="@id/textParticipants"
         app:layout_constraintTop_toBottomOf="@id/textParticipants"
         tools:listitem="@layout/item_participant" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCreateInterview"
+        android:id="@+id/btnEditInterview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,14 +16,13 @@ import com.example.interviewportal.databinding.FragmentEditInterviewBinding
 import com.example.interviewportal.models.InterviewEntity
 import com.example.interviewportal.models.User
 import com.example.interviewportal.utils.Constants
+import com.example.interviewportal.utils.Constants.buildMaterialDatePicker
+import com.example.interviewportal.utils.Constants.buildMaterialTimePicker
+import com.example.interviewportal.utils.Constants.showSnackBar
+import com.example.interviewportal.utils.ExtensionFunctions.hide
+import com.example.interviewportal.utils.ExtensionFunctions.show
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.EditInterviewViewModel
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointForward
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -76,30 +74,24 @@ class EditInterviewFragment : Fragment() {
         viewModel.interviewCreationResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
-                    Snackbar.make(
+                    showSnackBar(
                         requireContext(),
                         binding.root,
-                        getString(R.string.creating_interview),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    binding.btnEditInterview.isEnabled = false
+                        getString(R.string.creating_interview)
+                    )
+                    binding.progressBar.show()
                 }
                 is Resource.Error -> {
-                    Snackbar.make(
-                        requireContext(),
-                        binding.root,
-                        result.message.toString(),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    binding.btnEditInterview.isClickable = true
+                    binding.progressBar.hide()
+                    showSnackBar(requireContext(), binding.root, result.message.toString())
                 }
                 is Resource.Success -> {
-                    Snackbar.make(
+                    binding.progressBar.hide()
+                    showSnackBar(
                         requireContext(),
                         binding.root,
-                        getString(R.string.interview_created_successfully),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                        getString(R.string.interview_created_successfully)
+                    )
                     lifecycleScope.launch(Dispatchers.Main) {
                         delay(1500)
                         findNavController().popBackStack()
@@ -110,17 +102,13 @@ class EditInterviewFragment : Fragment() {
 
         viewModel.participantList.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is Resource.Loading -> binding.progressBar.show()
                 is Resource.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(
-                        requireContext(),
-                        "ERROR : ${result.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.progressBar.hide()
+                    showSnackBar(requireContext(), binding.root, result.message.toString())
                 }
                 is Resource.Success -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
                     if (!result.data.isNullOrEmpty()) {
                         val listSet = HashSet<String>(interview.participants.split(Regex(", ")))
                         val list = mutableListOf<User>()
@@ -152,29 +140,17 @@ class EditInterviewFragment : Fragment() {
             viewModel.createInterview(entity)
         }
 
-        binding.inputDate.setOnClickListener {
-            selectDate()
-        }
+        binding.inputDate.setOnClickListener { selectDate() }
 
-        binding.inputStartTime.setOnClickListener {
-            selectStartTime()
-        }
+        binding.inputStartTime.setOnClickListener { selectStartTime() }
 
-        binding.inputEndTime.setOnClickListener {
-            selectEndTime()
-        }
+        binding.inputEndTime.setOnClickListener { selectEndTime() }
 
     }
 
     private fun selectEndTime() {
 
-        val picker =
-            MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setHour(12)
-                .setMinute(10)
-                .setTitleText(getString(R.string.select_time))
-                .build()
+        val picker = buildMaterialTimePicker()
 
         picker.show(parentFragmentManager, picker.tag)
 
@@ -187,20 +163,13 @@ class EditInterviewFragment : Fragment() {
 
             binding.textEndTime.text = formattedTime
             endTimeInt = Constants.getFormattedTime(formattedTime)
-            Toast.makeText(requireContext(), "$endTimeInt", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     private fun selectStartTime() {
 
-        val picker =
-            MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setHour(12)
-                .setMinute(10)
-                .setTitleText("Select time")
-                .build()
+        val picker = buildMaterialTimePicker()
 
         picker.show(parentFragmentManager, picker.tag)
 
@@ -213,21 +182,13 @@ class EditInterviewFragment : Fragment() {
 
             binding.textStartTime.text = formattedTime
             startTimeInt = Constants.getFormattedTime(formattedTime)
-            Toast.makeText(requireContext(), "$startTimeInt", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     private fun selectDate() {
 
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.pick_date))
-            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-            .setCalendarConstraints(
-                CalendarConstraints.Builder()
-                    .setValidator(DateValidatorPointForward.now()).build()
-            )
-            .build()
+        val datePicker = buildMaterialDatePicker()
 
         datePicker.show(parentFragmentManager, datePicker.tag)
 

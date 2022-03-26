@@ -35,5 +35,5 @@
     <string name="edit_interview">Edit Interview</string>
     <string name="formatted_time">From : %1$s - %2$s</string>
     <string name="formatted_participant_count">%1$d Participants</string>
-    <string name="formatted_chip_name">%1$s %2$s</string>
+    <string name="formatted_chip_name">%1$s%2$s</string>
 </resources>

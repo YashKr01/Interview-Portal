@@ -10,6 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.interviewportal.adapters.InterviewAdapter
 import com.example.interviewportal.databinding.FragmentHomeBinding
+import com.example.interviewportal.utils.Constants.showSnackBar
+import com.example.interviewportal.utils.ExtensionFunctions.hide
+import com.example.interviewportal.utils.ExtensionFunctions.show
 import com.example.interviewportal.utils.Resource
 import com.example.interviewportal.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +44,7 @@ class HomeFragment : Fragment() {
             findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToEditInterviewFragment(interview))
         }, context = requireContext())
+
         binding.recyclerViewInterviews.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())
@@ -49,12 +53,13 @@ class HomeFragment : Fragment() {
 
         viewModel.interviewList.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Resource.Loading -> binding.progressBar3.visibility = View.VISIBLE
+                is Resource.Loading -> binding.progressBar3.show()
                 is Resource.Error -> {
-                    binding.progressBar3.visibility = View.GONE
+                    binding.progressBar3.hide()
+                    showSnackBar(requireContext(), binding.root, result.message.toString())
                 }
                 is Resource.Success -> {
-                    binding.progressBar3.visibility = View.GONE
+                    binding.progressBar3.hide()
                     interviewAdapter.submitList(result.data)
                 }
             }

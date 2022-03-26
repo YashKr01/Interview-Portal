@@ -27,10 +27,8 @@ class InterviewAdapter(
                     item.endTime
                 )
                 chipParticipantsCount.text =
-                    context.getString(R.string.formatted_participant_count, item.startTimeInt)
-                root.setOnClickListener {
-                    onClick(item)
-                }
+                    context.getString(R.string.formatted_participant_count, item.numberOfParticipants)
+                root.setOnClickListener { onClick(item) }
             }
     }
 

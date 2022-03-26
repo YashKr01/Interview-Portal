@@ -1,6 +1,13 @@
 package com.example.interviewportal.utils
 
+import android.content.Context
+import android.view.View
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 
 object Constants {
 
@@ -12,6 +19,13 @@ object Constants {
     const val COLOR_1 = 1
     const val COLOR_2 = 2
     const val COLOR_3 = 3
+
+    const val VALIDATE_FIELDS = "Please validate all details"
+    const val VALIDATE_PARTICIPANT_NUMBER = "Number of participants must me more than 1"
+    const val VALIDATE_TIMING= "One or more participants are not available for the schedule time"
+
+    private const val HOUR = 12
+    private const val MINUTE = 10
 
     fun getFormattedTime(pickedHour: Int, pickedMinute: Int, picker: MaterialTimePicker): String {
         var result: String
@@ -40,8 +54,31 @@ object Constants {
 
     fun getFormattedTime(time: String): Int {
         val hour = "${time[0]}${time[1]}"
-        return if(time.contains("PM")) (hour.toInt() % 12) + 12
+        return if (time.contains("PM")) (hour.toInt() % 12) + 12
         else hour.toInt() % 12
     }
+
+    fun showSnackBar(context: Context, view: View, text: CharSequence) {
+        Snackbar.make(
+            context,
+            view,
+            text,
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    fun buildMaterialTimePicker() = MaterialTimePicker.Builder()
+        .setTimeFormat(TimeFormat.CLOCK_12H)
+        .setHour(HOUR)
+        .setMinute(MINUTE)
+        .build()
+
+    fun buildMaterialDatePicker() = MaterialDatePicker.Builder.datePicker()
+        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+        .setCalendarConstraints(
+            CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.now()).build()
+        )
+        .build()
 
 }

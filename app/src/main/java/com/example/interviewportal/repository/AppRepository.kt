@@ -7,6 +7,9 @@ import com.example.interviewportal.models.User
 import com.example.interviewportal.utils.Constants.INTERVIEWS_KEY
 import com.example.interviewportal.utils.Constants.PARTICIPANT_INTERVIEW_KEY
 import com.example.interviewportal.utils.Constants.USERS_KEY
+import com.example.interviewportal.utils.Constants.VALIDATE_FIELDS
+import com.example.interviewportal.utils.Constants.VALIDATE_PARTICIPANT_NUMBER
+import com.example.interviewportal.utils.Constants.VALIDATE_TIMING
 import com.example.interviewportal.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -50,9 +53,7 @@ class AppRepository @Inject constructor(
                     )
 
                     database.getReference(USERS_KEY).child(uid).setValue(user)
-                        .addOnSuccessListener {
-                            result.postValue(Resource.Success(user))
-                        }
+                        .addOnSuccessListener { result.postValue(Resource.Success(user)) }
                         .addOnFailureListener { error ->
                             result.postValue(Resource.Error(error.message.toString(), null))
                         }
@@ -90,10 +91,9 @@ class AppRepository @Inject constructor(
 
         if (interview.title.isEmpty() || interview.date.isEmpty() ||
             interview.startTimeInt == null || interview.endTimeInt == null
-        )
-            _createInterviewResult.postValue(Resource.Error(message = "Please validate all details"))
+        ) _createInterviewResult.postValue(Resource.Error(message = VALIDATE_FIELDS))
         else if (interview.numberOfParticipants < 2)
-            _createInterviewResult.postValue(Resource.Error(message = "Number of participants must me more than 1"))
+            _createInterviewResult.postValue(Resource.Error(message = VALIDATE_PARTICIPANT_NUMBER))
         else if (checkValidInterview(interview)) {
             database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
                 .addOnSuccessListener {
@@ -111,7 +111,7 @@ class AppRepository @Inject constructor(
                                 )
                         }
                     } else {
-                        _createInterviewResult.postValue(Resource.Error("One or more participants are not available for the schedule time"))
+                        _createInterviewResult.postValue(Resource.Error(VALIDATE_TIMING))
                     }
 
                 }

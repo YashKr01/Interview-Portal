@@ -6,7 +6,6 @@
 - :x: NO Hard Coded Code
 - :x: NO Boiler Plate Code
 - :x: NO Warnings
-- :x: NO Deprecated Code
 - :heavy_check_mark: 100% KOTLIN
 - :heavy_check_mark: MVVM Architecture 
 - :heavy_check_mark: Naming Convention Followed

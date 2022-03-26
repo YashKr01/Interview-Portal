@@ -3,14 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/drawable/ic_round_add_24.xml" value="0.1295" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/activity_main.xml" value="0.16770833333333332" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_edit_interview.xml" value="0.13760683760683762" />
-        <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_home.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_interview.xml" value="0.22" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_login.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/fragment_register.xml" value="0.22" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/item_interview.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/layout/item_participant.xml" value="0.22" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/InterviewPortal/app/src/main/res/menu/menu_upload.xml" value="0.13760683760683762" />
       </map>
     </option>
   </component>

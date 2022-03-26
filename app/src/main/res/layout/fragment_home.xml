@@ -28,8 +28,8 @@
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:focusable="true"
-        android:src="@drawable/ic_round_add_24"
-        app:backgroundTint="@color/colorYellow"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/colorWhite" />

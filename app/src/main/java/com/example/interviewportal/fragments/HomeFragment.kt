@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.progressBar3.visibility = View.GONE
-                    if (!result.data.isNullOrEmpty()) interviewAdapter.submitList(result.data)
+                    interviewAdapter.submitList(result.data)
                 }
             }
         }

@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class AppRepository @Inject constructor(
@@ -31,6 +32,8 @@ class AppRepository @Inject constructor(
 
     private val _interviewList = MutableLiveData<Resource<List<InterviewEntity>>>()
     val interviewList get() = _interviewList
+
+    private val _validationResult = MutableLiveData<Boolean>()
 
     fun registerUser(email: String, password: String, username: String, color: Int) {
         _result.postValue(Resource.Loading())
@@ -82,7 +85,7 @@ class AppRepository @Inject constructor(
         })
     }
 
-    fun createInterview(interview: InterviewEntity) {
+    suspend fun createInterview(interview: InterviewEntity) {
         _createInterviewResult.postValue(Resource.Loading())
 
         if (interview.title.isEmpty() || interview.date.isEmpty() ||
@@ -91,27 +94,74 @@ class AppRepository @Inject constructor(
             _createInterviewResult.postValue(Resource.Error(message = "Please validate all details"))
         else if (interview.numberOfParticipants < 2)
             _createInterviewResult.postValue(Resource.Error(message = "Number of participants must me more than 1"))
-        else {
+        else if (checkValidInterview(interview)) {
             database.reference.child(INTERVIEWS_KEY).child(interview.uid).setValue(interview)
                 .addOnSuccessListener {
-                    _createInterviewResult.postValue(Resource.Success(interview))
-                    for (participantId in interview.participants.split(Regex(", "))) {
-                        database.reference.child(PARTICIPANT_INTERVIEW_KEY).child(participantId)
-                            .push().setValue(
-                                ParticipantInterview(
-                                    interviewId = interview.uid,
-                                    date = interview.date,
-                                    startTimeInt = interview.startTimeInt,
-                                    endTimeInt = interview.endTimeInt
+                    if (_validationResult.value == true) {
+                        _createInterviewResult.postValue(Resource.Success(interview))
+                        for (participantId in interview.participants.split(Regex(", "))) {
+                            database.reference.child(PARTICIPANT_INTERVIEW_KEY).child(participantId)
+                                .child(interview.uid).setValue(
+                                    ParticipantInterview(
+                                        interviewId = interview.uid,
+                                        date = interview.date,
+                                        startTimeInt = interview.startTimeInt,
+                                        endTimeInt = interview.endTimeInt
+                                    )
                                 )
-                            )
+                        }
+                    } else {
+                        _createInterviewResult.postValue(Resource.Error("One or more participants are not available for the schedule time"))
                     }
+
                 }
                 .addOnFailureListener {
                     _createInterviewResult.postValue(Resource.Error(it.message.toString(), null))
                 }
         }
 
+    }
+
+    private suspend fun checkValidInterview(interview: InterviewEntity): Boolean {
+
+        _validationResult.postValue(true)
+        delay(3000)
+        val userIdList = interview.participants.split(Regex(", "))
+
+        for (userId in userIdList) {
+
+            database.reference.child(PARTICIPANT_INTERVIEW_KEY).child(userId)
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (snapshot in dataSnapshot.children) {
+                            val currentInterview =
+                                snapshot.getValue(ParticipantInterview::class.java)!!
+
+                            val startTimeClash =
+                                (currentInterview.startTimeInt >= interview.startTimeInt!! &&
+                                        currentInterview.startTimeInt < interview.endTimeInt!!)
+
+                            val endTimeClash =
+                                (currentInterview.endTimeInt <= interview.endTimeInt!! &&
+                                        currentInterview.endTimeInt > interview.startTimeInt)
+
+                            if (currentInterview.date == interview.date && (startTimeClash || endTimeClash)) {
+                                _validationResult.postValue(false)
+                                break
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _createInterviewResult.postValue(Resource.Error(error.message, null))
+                        _validationResult.postValue(false)
+                    }
+                })
+
+        }
+
+        return true
     }
 
     fun getInterviewList() {

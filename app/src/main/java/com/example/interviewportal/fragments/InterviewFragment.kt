@@ -99,7 +99,6 @@ class InterviewFragment : Fragment() {
                         getString(R.string.creating_interview),
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    binding.btnCreateInterview.isEnabled = false
                 }
                 is Resource.Error -> {
                     Snackbar.make(
@@ -108,7 +107,6 @@ class InterviewFragment : Fragment() {
                         result.message.toString(),
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    binding.btnCreateInterview.isClickable = true
                 }
                 is Resource.Success -> {
                     Snackbar.make(
@@ -118,7 +116,7 @@ class InterviewFragment : Fragment() {
                         Snackbar.LENGTH_SHORT
                     ).show()
                     lifecycleScope.launch(Dispatchers.Main) {
-                        delay(500)
+                        delay(1500)
                         findNavController().popBackStack()
                     }
                 }

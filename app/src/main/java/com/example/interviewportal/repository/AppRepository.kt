@@ -89,9 +89,12 @@ class AppRepository @Inject constructor(
     suspend fun createInterview(interview: InterviewEntity) {
         _createInterviewResult.postValue(Resource.Loading())
 
-        if (interview.title.isEmpty() || interview.date.isEmpty() ||
+        if (interview.title.isEmpty() || interview.startDate.isEmpty() ||
             interview.startTimeInt == null || interview.endTimeInt == null
         ) _createInterviewResult.postValue(Resource.Error(message = VALIDATE_FIELDS))
+        else if (interview.endDateLong!! < interview.startDateLong!!) _createInterviewResult.postValue(
+            Resource.Error("EndTime Cannot be less than Start time")
+        )
         else if (interview.numberOfParticipants < 2)
             _createInterviewResult.postValue(Resource.Error(message = VALIDATE_PARTICIPANT_NUMBER))
         else if (checkValidInterview(interview)) {
@@ -105,7 +108,7 @@ class AppRepository @Inject constructor(
                                 .child(interview.uid).setValue(
                                     ParticipantInterview(
                                         interviewId = interview.uid,
-                                        date = interview.date,
+                                        date = interview.startDate,
                                         startTimeInt = interview.startTimeInt,
                                         endTimeInt = interview.endTimeInt
                                     )
@@ -147,9 +150,10 @@ class AppRepository @Inject constructor(
                                 (currentInterview.endTimeInt <= interview.endTimeInt!! &&
                                         currentInterview.endTimeInt > interview.startTimeInt)
 
-                            if (currentInterview.date == interview.date &&
+                            if (currentInterview.date == interview.startDate &&
                                 currentInterview.interviewId != interview.uid &&
-                                (startTimeClash || endTimeClash)) {
+                                (startTimeClash || endTimeClash)
+                            ) {
                                 _validationResult.postValue(false)
                                 break
                             }

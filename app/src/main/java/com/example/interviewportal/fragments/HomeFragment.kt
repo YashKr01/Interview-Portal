@@ -77,7 +77,12 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUploadFragment())
+        if(item.itemId == R.id.navigateToHomeFragment) {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRegisterFragment())
+        }
+        else {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUploadFragment())
+        }
 
         return true
     }

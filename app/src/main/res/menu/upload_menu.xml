@@ -8,4 +8,10 @@
         android:title="@string/upload_resume"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/navigateToHomeFragment"
+        android:icon="@drawable/ic_add"
+        android:title="Add user"
+        app:showAsAction="always" />
+
 </menu>

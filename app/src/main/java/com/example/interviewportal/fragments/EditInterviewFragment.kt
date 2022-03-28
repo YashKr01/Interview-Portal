@@ -61,7 +61,7 @@ class EditInterviewFragment : Fragment() {
             textInterviewTitle.setText(interview.title)
             textStartTime.text = interview.startTime
             textEndTime.text = interview.endTime
-            textViewDate.text = interview.date
+            textViewDate.text = interview.startDate
         }
 
         val participantAdapter = ParticipantsAdapter(requireContext())
@@ -127,7 +127,7 @@ class EditInterviewFragment : Fragment() {
             val list = participantAdapter.getList()
             val entity = InterviewEntity(
                 uid = interview.uid,
-                date = binding.textViewDate.text.toString(),
+                startDate = binding.textViewDate.text.toString(),
                 numberOfParticipants = list.size,
                 endTime = binding.textEndTime.text.toString(),
                 startTime = binding.textStartTime.text.toString(),

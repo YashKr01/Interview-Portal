@@ -1,10 +1,12 @@
 package com.example.interviewportal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -38,6 +40,9 @@ class InterviewFragment : Fragment() {
     private var startTimeInt: Int? = null
     private var endTimeInt: Int? = null
 
+    private var startDateLong: Long? = null
+    private var endDateLong: Long? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,7 +75,7 @@ class InterviewFragment : Fragment() {
             }
         }
 
-        binding.inputDate.setOnClickListener { selectDate() }
+        binding.inputDate.setOnClickListener { selectDate(binding.textViewDate) }
 
         binding.inputStartTime.setOnClickListener { selectStartTime() }
 
@@ -106,7 +111,7 @@ class InterviewFragment : Fragment() {
             val list = participantAdapter.getList()
             val entity = InterviewEntity(
                 uid = UUID.randomUUID().toString(),
-                date = binding.textViewDate.text.toString(),
+                startDate = binding.textViewDate.text.toString(),
                 numberOfParticipants = list.size,
                 endTime = binding.textEndTime.text.toString(),
                 startTime = binding.textStartTime.text.toString(),
@@ -114,9 +119,18 @@ class InterviewFragment : Fragment() {
                 endTimeInt = endTimeInt,
                 participants = list.toString()
                     .substring(1, list.toString().length - 1),
-                title = binding.textInterviewTitle.text.toString()
+                title = binding.textInterviewTitle.text.toString(),
+                startDateLong = startDateLong,
+                endDateLong = endDateLong
             )
             viewModel.createInterview(entity)
+
+            Log.d("SELECTED TIME", "onViewCreated: $startDateLong")
+            Log.d("SELECTED TIME", "onViewCreated: $endDateLong")
+        }
+
+        binding.inputEndDate.setOnClickListener {
+            selectDate(binding.textViewEndDate)
         }
 
 
@@ -159,14 +173,16 @@ class InterviewFragment : Fragment() {
 
     }
 
-    private fun selectDate() {
+    private fun selectDate(textView: TextView) {
 
         val datePicker = buildMaterialDatePicker()
 
         datePicker.show(parentFragmentManager, datePicker.tag)
 
         datePicker.addOnPositiveButtonClickListener {
-            binding.textViewDate.text = datePicker.headerText
+            textView.text = datePicker.headerText
+            if (textView.id == R.id.textViewDate) startDateLong = datePicker.selection
+            else endDateLong = datePicker.selection
         }
 
     }

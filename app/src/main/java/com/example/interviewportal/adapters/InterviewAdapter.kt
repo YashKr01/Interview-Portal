@@ -19,7 +19,7 @@ class InterviewAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: InterviewEntity) =
             binding.apply {
-                itemInterviewDate.text = item.date
+                itemInterviewDate.text = item.startDate
                 itemInterviewTitle.text = item.title
                 itemTime.text = context.getString(
                     R.string.formatted_time,

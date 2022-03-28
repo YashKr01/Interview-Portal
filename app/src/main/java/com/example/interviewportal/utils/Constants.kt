@@ -22,7 +22,7 @@ object Constants {
 
     const val VALIDATE_FIELDS = "Please validate all details"
     const val VALIDATE_PARTICIPANT_NUMBER = "Number of participants must me more than 1"
-    const val VALIDATE_TIMING= "One or more participants are not available for the schedule time"
+    const val VALIDATE_TIMING = "One or more participants are not available for the schedule time"
 
     private const val HOUR = 12
     private const val MINUTE = 10

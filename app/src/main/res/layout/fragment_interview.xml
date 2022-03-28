@@ -52,18 +52,32 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/txtDate"
+        android:id="@+id/txtStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
         android:fontFamily="@font/ubuntu_medium"
         android:paddingTop="@dimen/_4sdp"
         android:paddingBottom="@dimen/_4sdp"
-        android:text="@string/date"
+        android:text="Start Date"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textField1" />
+
+    <TextView
+        android:id="@+id/txtEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:fontFamily="@font/ubuntu_medium"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="End date"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtStartDate" />
 
     <TextView
         android:id="@+id/txtStartTime"
@@ -76,8 +90,8 @@
         android:text="@string/start_time"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12ssp"
-        app:layout_constraintStart_toStartOf="@id/txtDate"
-        app:layout_constraintTop_toBottomOf="@id/txtDate" />
+        app:layout_constraintStart_toStartOf="@id/txtStartDate"
+        app:layout_constraintTop_toBottomOf="@id/txtEndDate" />
 
     <TextView
         android:id="@+id/txtEndTime"
@@ -90,8 +104,34 @@
         android:text="@string/end_time"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12ssp"
-        app:layout_constraintStart_toStartOf="@id/txtDate"
+        app:layout_constraintStart_toStartOf="@id/txtStartDate"
         app:layout_constraintTop_toBottomOf="@id/txtStartTime" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/inputEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/txtEndDate"
+        app:layout_constraintStart_toStartOf="@id/inputStartTime"
+        app:layout_constraintTop_toTopOf="@id/txtEndDate"
+        app:strokeColor="@color/colorTextSecondary"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <TextView
+            android:id="@+id/textViewEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="@string/sample_date"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:textColor="@color/colorTextSecondary"
+            android:textColorHint="@color/colorTextSecondary"
+            android:textSize="@dimen/_10ssp" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/inputDate"
@@ -99,9 +139,9 @@
         android:layout_height="0dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/txtDate"
+        app:layout_constraintBottom_toBottomOf="@id/txtStartDate"
         app:layout_constraintStart_toStartOf="@id/inputStartTime"
-        app:layout_constraintTop_toTopOf="@id/txtDate"
+        app:layout_constraintTop_toTopOf="@id/txtStartDate"
         app:strokeColor="@color/colorTextSecondary"
         app:strokeWidth="@dimen/_1sdp">
 
@@ -182,7 +222,7 @@
         android:textAllCaps="true"
         android:textColor="@color/colorTextSecondary"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toStartOf="@id/txtDate"
+        app:layout_constraintStart_toStartOf="@id/txtStartDate"
         app:layout_constraintTop_toBottomOf="@id/inputEndTime" />
 
     <TextView
